@@ -1,0 +1,12 @@
+from setuptools import setup, find_namespace_packages
+
+setup(
+    name='cp-tool',
+    version="0.0.1",
+    entry_points={
+        "console_scripts": [
+            "parse=cmds.parse:main",
+        ]
+    },
+    namespace_packages=find_namespace_packages(include=["utils.*"])
+)
