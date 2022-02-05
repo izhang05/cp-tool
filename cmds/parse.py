@@ -1,6 +1,6 @@
 import argparse
 from utils.problem import Problem
-from api import parser
+import cf
 
 
 def main() -> None:
@@ -11,8 +11,7 @@ def main() -> None:
         pid = "1586H"
 
     problem: Problem = Problem(pid)
-    parser.parse(problem)
-    return
+    cf.parser.parse(problem)
 
 
 if __name__ == '__main__':
