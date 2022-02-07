@@ -8,5 +8,5 @@ setup(
             "parse=cmds.parse:main",
         ]
     },
-    namespace_packages=find_namespace_packages(include=["utils.*"])
+    namespace_packages=find_namespace_packages(include=["utils.*", "cf.*"])
 )

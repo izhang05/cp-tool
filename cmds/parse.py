@@ -1,6 +1,7 @@
 import argparse
+import utils.util as util
 from utils.problem import Problem
-import cf
+import cf.parser
 
 
 def main() -> None:
@@ -10,6 +11,8 @@ def main() -> None:
     if __name__ == "__main__":
         pid = "1586H"
 
+    contest, index = util.get_contest_index(pid)
+    print(f"Parse Contest {contest}, Problem {index}")
     problem: Problem = Problem(pid)
     cf.parser.parse(problem)
 
