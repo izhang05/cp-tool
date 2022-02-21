@@ -6,6 +6,7 @@ setup(
     entry_points={
         "console_scripts": [
             "parse=cmds.parse:main",
+            "config=cmds.config:main",
         ]
     },
     namespace_packages=find_namespace_packages(include=["utils.*", "cf.*"])
