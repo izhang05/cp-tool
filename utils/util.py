@@ -15,7 +15,7 @@ def get_contest_index(pid: str) -> tuple[int, str]:
             contest += i
         else:
             index += i
-    return int(contest), index
+    return int(contest), index.upper()
 
 
 def get_name(url: str) -> str:

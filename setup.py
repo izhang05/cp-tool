@@ -7,6 +7,7 @@ setup(
         "console_scripts": [
             "parse=cmds.parse:main",
             "config=cmds.config:main",
+            "bm=cmds.bookmark:main",
         ]
     },
     namespace_packages=find_namespace_packages(include=["utils.*", "cf.*"])

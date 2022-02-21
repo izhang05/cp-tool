@@ -1,10 +1,11 @@
 from datetime import datetime
 from utils.util import get_url, get_name
+import jsonpickle
 
 
 class Problem:
     def __init__(self, pid: str, name: str = None, url: str = None, solved: bool = False, started: datetime = None,
-                 finished: datetime = None):
+                 finished: datetime = None, bookmarks: list[str] = None, tags: list[str] = None):
         self.pid: str = pid
         self.url: str = url
         self.name: str = name
@@ -17,5 +18,5 @@ class Problem:
         if started is None:
             self.started = datetime.now()
         self.finished: datetime = finished
-        self.bookmarks: list[str]
-        self.tags: list[str]
+        self.bookmarks: list[str] = bookmarks
+        self.tags: list[str] = tags
