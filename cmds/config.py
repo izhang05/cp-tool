@@ -1,8 +1,11 @@
 import utils.config as config
 import os
 
-def main() -> str:
-    config.create_dir()
-    os.system("/bin/bash")
-    return "hi"
 
+def main() -> None:
+    config.create_dir()
+    data = {"folder": {}}
+    for i in {"root", "contest", "gym"}:
+        print(f"Enter {i} path")
+        data["folder"][i] = input()
+    config.set_config(data)
