@@ -7,7 +7,7 @@ import jsonpickle
 
 class Problem:
     def __init__(self, pid: str, name: str = None, url: str = None, solved: bool = False, started: datetime = None,
-                 finished: datetime = None, bookmarks: list[str] = None, tags: list[str] = None):
+                 finished: datetime = None, bookmarks: list[str] = [], tags: list[str] = []):
         self.pid: str = pid
         self.url: str = url
         self.name: str = name
@@ -28,7 +28,7 @@ class Problem:
                f"solved: {self.solved}\n" \
                f"started: {self.started}\n" \
                f"finished: {self.finished}\n" \
-               f"boomarks: {self.bookmarks}\n" \
+               f"bookmarks: {self.bookmarks}\n" \
                f"tags: {self.tags}"
 
     def save(self) -> None:
@@ -40,3 +40,8 @@ class Problem:
         if create:
             directory.mkdir(parents=True, exist_ok=True)
         return directory
+
+    def add_bookmark(self, bookmark: str) -> None:
+        if bookmark in self.bookmarks:
+            raise ValueError(f"Bookmark \"{bookmark}\" already exists")
+        self.bookmarks.append(bookmark)

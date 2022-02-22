@@ -4,6 +4,7 @@ from pathlib import Path
 import utils.config as config
 from utils.problem import Problem
 import jsonpickle
+import json
 
 
 def get_url(pid: str) -> str:
@@ -43,3 +44,19 @@ def get_dir(pid: str) -> Path:
 def load_problem(pid: str) -> Problem:
     with open(config.problem_path / f"{pid}.json", 'r') as f:
         return jsonpickle.decode(f.read())
+
+
+def load_bookmarks() -> dict:
+    try:
+        with open(config.bookmarks_path, "r") as f:
+            bookmarks: dict = json.load(f)
+    except json.decoder.JSONDecodeError:
+        with open(config.bookmarks_path, "w") as f:
+            json.dump(dict(), f)
+        bookmarks = {}
+    return bookmarks
+
+
+def write_bookmark(data: dict) -> None:
+    with open(config.bookmarks_path, "w") as f:
+        json.dump(data, f)
