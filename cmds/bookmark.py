@@ -1,21 +1,21 @@
 import argparse
 import utils.util as util
-from utils.problem import Problem
-import cf.parser
+from pathlib import Path
+from colorama import Fore
 
 
 def main() -> None:
     p: argparse.ArgumentParser = argparse.ArgumentParser()
-    p.add_argument('pid', metavar='P', type=str, nargs='*', help='problem ID')
+    p.add_argument("-p", "--pid", type=str, help='problem ID')
+    p.add_argument('bookmark', metavar='B', type=str, nargs='*', help='bookmark')
+
     pid: str
     if p.parse_args().pid is not None:
-        pid = "".join(p.parse_args().pid)
+        pid = p.parse_args().pid.upper()
     else:
-        pid = "hi"
-        pass
-        # pid =
-    contest, index = util.get_contest_index(pid)
-
-
-if __name__ == '__main__':
-    main()
+        try:
+            pid = util.get_pid(Path.cwd())
+        except ValueError as e:
+            print(Fore.RED + str(e))
+            return
+    print(pid)

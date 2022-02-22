@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from pathlib import Path
 
 
 def get_url(pid: str) -> str:
@@ -21,3 +22,11 @@ def get_contest_index(pid: str) -> tuple[int, str]:
 def get_name(url: str) -> str:
     soup: BeautifulSoup = BeautifulSoup(requests.get(url).text, 'html.parser')
     return soup.find('div', {'class': 'problem-statement'}).find('div', {'class': 'title'}).text
+
+
+def get_pid(dir: Path) -> str:
+    index: str = dir.name.upper()
+    contest: str = dir.parent.name
+    if not contest.isnumeric():
+        raise ValueError(f"Invalid contest name: {contest}")
+    return f"{contest}{index}"
