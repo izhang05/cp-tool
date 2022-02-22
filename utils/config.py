@@ -28,5 +28,15 @@ def set_config(data: dict) -> None:
         json.dump(data, f, indent=4)
 
 
+def load_config() -> dict:
+    with open(config_path, "r") as f:
+        return json.load(f)
+
+
+def contest_path() -> Path:
+    data = load_config()
+    return Path(data["folder"]["root"]) / Path(data["folder"]["contest"])
+
+
 if __name__ == "__main__":
     setup()

@@ -1,5 +1,6 @@
 from datetime import datetime
-from utils.util import get_url, get_name
+import utils.util as util
+from pathlib import Path
 
 
 class Problem:
@@ -9,9 +10,9 @@ class Problem:
         self.url: str = url
         self.name: str = name
         if url is None:
-            self.url = get_url(pid)
+            self.url = util.get_url(pid)
         if name is None:
-            self.name = get_name(self.url)
+            self.name = util.get_name(self.url)
         self.solved: bool = solved
         self.started: datetime = started
         if started is None:
@@ -19,3 +20,9 @@ class Problem:
         self.finished: datetime = finished
         self.bookmarks: list[str] = bookmarks
         self.tags: list[str] = tags
+
+    def get_dir(self, create=True) -> Path:
+        directory = util.get_dir(self.pid)
+        if create:
+            directory.mkdir(parents=True, exist_ok=True)
+        return directory

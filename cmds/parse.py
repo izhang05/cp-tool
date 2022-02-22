@@ -5,6 +5,7 @@ from utils.problem import Problem
 import cf.parser
 import jsonpickle
 from pathlib import Path
+from colorama import Fore
 
 
 def main() -> None:
@@ -16,9 +17,10 @@ def main() -> None:
     else:
         pid = util.get_pid(Path.cwd())
     contest, index = util.get_contest_index(pid)
-    print(f"Parse Contest {contest}, Problem {index}")
+    print(f"{Fore.CYAN}Parsing Contest {contest}, Problem {index}")
     problem: Problem = Problem(pid)
     cf.parser.parse(problem)
+    print(f"{Fore.GREEN}Saved to {problem.get_dir()}")
     with open(config.problem_path / f"{pid}.json", 'w') as f:
         f.write(jsonpickle.encode(problem))
 
