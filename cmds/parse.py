@@ -15,7 +15,11 @@ def main() -> None:
     if p.parse_args().pid:
         pid = "".join(p.parse_args().pid).upper()
     else:
-        pid = util.get_pid(Path.cwd())
+        try:
+            pid = util.get_pid(Path.cwd())
+        except ValueError as e:
+            print(Fore.RED + str(e))
+            return
     contest, index = util.get_contest_index(pid)
     print(f"{Fore.CYAN}Parsing Contest {contest}, Problem {index}")
     problem: Problem = Problem(pid)

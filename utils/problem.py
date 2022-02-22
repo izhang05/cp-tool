@@ -21,6 +21,14 @@ class Problem:
         self.bookmarks: list[str] = bookmarks
         self.tags: list[str] = tags
 
+    def __str__(self) -> str:
+        return f"{self.pid} - {self.name} - {self.url}\n" \
+               f"solved: {self.solved}\n" \
+               f"started: {self.started}\n" \
+               f"finished: {self.finished}\n" \
+               f"boomarks: {self.bookmarks}\n" \
+               f"tags: {self.tags}"
+
     def get_dir(self, create=True) -> Path:
         directory = util.get_dir(self.pid)
         if create:

@@ -2,6 +2,9 @@ import argparse
 import utils.util as util
 from pathlib import Path
 from colorama import Fore
+from utils.problem import Problem
+import utils.config as config
+import jsonpickle
 
 
 def main() -> None:
@@ -18,4 +21,7 @@ def main() -> None:
         except ValueError as e:
             print(Fore.RED + str(e))
             return
-    print(pid)
+    problem: Problem
+    with open(config.problem_path / f"{pid}.json", 'r') as f:
+        problem = jsonpickle.decode(f.read())
+    print(problem)
