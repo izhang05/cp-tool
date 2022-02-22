@@ -19,16 +19,29 @@ def add_bookmark(add: str, bookmarks: dict) -> bool:
 
 def main() -> None:
     p: argparse.ArgumentParser = argparse.ArgumentParser()
-    p.add_argument("-a", "--add", type=str, help="Create bookmark type")
+    p.add_argument("-a", "--add", action="store_true", help="Create bookmark type")
+    p.add_argument("-l", "--list", action="store_true", help="List all bookmarks")
     p.add_argument("-p", "--pid", type=str, help='problem ID')
     p.add_argument('bookmark', metavar='B', type=str, nargs='?', help="Add bookmark to problem")
 
-    if p.parse_args().add is not None:
-        add_bookmark(p.parse_args().add, util.load_bookmarks())
+    args = p.parse_args()
+
+    if args.list:
+        bookmarks: dict = util.load_bookmarks()
+        if args.bookmark is not None:
+            print(f"{args.bookmark}: {bookmarks[args.bookmark]}")
+        else:
+            print(bookmarks)
         return
 
-    if p.parse_args().pid is not None:
-        pid: str = p.parse_args().pid.upper()
+    if args.add:
+        if args.bookmark is not None:
+            add_bookmark(args.bookmark, util.load_bookmarks())
+        return
+
+
+    if args.pid is not None:
+        pid: str = args.pid.upper()
     else:
         try:
             pid = util.get_pid(Path.cwd())
@@ -39,7 +52,7 @@ def main() -> None:
         problem: Problem = util.load_problem(pid)
     except FileNotFoundError:
         print(Fore.RED + f"Problem {pid} not found.")
-        print("Enter y to parse and x to exit.")
+        print(f"Enter y to parse and x to exit.{Fore.RESET}")
         if input().lower() == "y":
             contest, index = util.get_contest_index(pid)
             print(f"{Fore.CYAN}Parsing Contest {contest}, Problem {index}")
@@ -50,10 +63,10 @@ def main() -> None:
         else:
             return
     bookmarks: dict = util.load_bookmarks()
-    add: str = p.parse_args().bookmark
+    add: str = args.bookmark
     if add not in bookmarks:
         print(f"{Fore.RED}Bookmark \"{add}\" does not exist.")
-        print("Enter y to add and x to exit.")
+        print(f"Enter y to add and x to exit.{Fore.RESET}")
         if input().lower() == "y":
             add_bookmark(add, bookmarks)
         else:

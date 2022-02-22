@@ -45,3 +45,7 @@ class Problem:
         if bookmark in self.bookmarks:
             raise ValueError(f"Bookmark \"{bookmark}\" already exists")
         self.bookmarks.append(bookmark)
+
+    def finish(self) -> None:
+        self.solved = True
+        self.finished = datetime.now()

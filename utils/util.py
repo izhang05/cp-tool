@@ -5,6 +5,7 @@ import utils.config as config
 from utils.problem import Problem
 import jsonpickle
 import json
+import argparse
 
 
 def get_url(pid: str) -> str:
@@ -60,3 +61,14 @@ def load_bookmarks() -> dict:
 def write_bookmark(data: dict) -> None:
     with open(config.bookmarks_path, "w") as f:
         json.dump(data, f)
+
+
+def arg_pid() -> tuple[str, int, str]:
+    p: argparse.ArgumentParser = argparse.ArgumentParser()
+    p.add_argument('pid', metavar='P', type=str, nargs='*', help='problem ID')
+    pid: str
+    if p.parse_args().pid:
+        pid = "".join(p.parse_args().pid).upper()
+    else:
+        pid = get_pid(Path.cwd())
+    return pid, get_contest_index(pid)[0], get_contest_index(pid)[1]
