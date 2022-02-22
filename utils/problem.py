@@ -1,6 +1,8 @@
 from datetime import datetime
 import utils.util as util
 from pathlib import Path
+import utils.config as config
+import jsonpickle
 
 
 class Problem:
@@ -21,13 +23,17 @@ class Problem:
         self.bookmarks: list[str] = bookmarks
         self.tags: list[str] = tags
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"{self.pid} - {self.name} - {self.url}\n" \
                f"solved: {self.solved}\n" \
                f"started: {self.started}\n" \
                f"finished: {self.finished}\n" \
                f"boomarks: {self.bookmarks}\n" \
                f"tags: {self.tags}"
+
+    def save(self) -> None:
+        with open(config.problem_path / f"{self.pid}.json", 'w') as f:
+            f.write(jsonpickle.encode(self))
 
     def get_dir(self, create=True) -> Path:
         directory = util.get_dir(self.pid)

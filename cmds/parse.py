@@ -25,8 +25,7 @@ def main() -> None:
     problem: Problem = Problem(pid)
     cf.parser.parse(problem)
     print(f"{Fore.GREEN}Saved to {problem.get_dir()}")
-    with open(config.problem_path / f"{pid}.json", 'w') as f:
-        f.write(jsonpickle.encode(problem))
+    problem.save()
 
 
 if __name__ == '__main__':

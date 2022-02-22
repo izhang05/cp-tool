@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
 import utils.config as config
+from utils.problem import Problem
+import jsonpickle
 
 
 def get_url(pid: str) -> str:
@@ -36,3 +38,8 @@ def get_pid(directory: Path) -> str:
 def get_dir(pid: str) -> Path:
     contest, index = get_contest_index(pid)
     return Path(config.contest_path() / f"{contest}/{index}")
+
+
+def load_problem(pid: str) -> Problem:
+    with open(config.problem_path / f"{pid}.json", 'r') as f:
+        return jsonpickle.decode(f.read())
