@@ -3,12 +3,13 @@ import utils.util as util
 from pathlib import Path
 from colorama import Fore
 from utils.problem import Problem
+from utils import config
 import cf.parser
 
 
 def add_bookmark(add: str, bookmarks: dict) -> bool:
     if add in bookmarks:
-        print(f"{Fore.RED}Bookmark \"{add}\" already exists.")
+        print(f"{Fore.RED}Bookmark \"{add}\" already exists.{Fore.RESET}")
         return False
     else:
         bookmarks[add] = []
@@ -18,6 +19,7 @@ def add_bookmark(add: str, bookmarks: dict) -> bool:
 
 
 def main() -> None:
+    config.setup()
     p: argparse.ArgumentParser = argparse.ArgumentParser()
     p.add_argument("-a", "--add", action="store_true", help="Create bookmark type")
     p.add_argument("-l", "--list", action="store_true", help="List all bookmarks")
@@ -39,14 +41,13 @@ def main() -> None:
             add_bookmark(args.bookmark, util.load_bookmarks())
         return
 
-
     if args.pid is not None:
         pid: str = args.pid.upper()
     else:
         try:
             pid = util.get_pid(Path.cwd())
         except ValueError as e:
-            print(Fore.RED + str(e))
+            print(Fore.RED + str(e) + Fore.RESET)
             return
     try:
         problem: Problem = util.load_problem(pid)
@@ -66,7 +67,7 @@ def main() -> None:
     add: str = args.bookmark
     if add not in bookmarks:
         print(f"{Fore.RED}Bookmark \"{add}\" does not exist.")
-        print(f"Enter y to add and x to exit.{Fore.RESET}")
+        print(f"Enter y to create and x to exit.{Fore.RESET}")
         if input().lower() == "y":
             add_bookmark(add, bookmarks)
         else:
@@ -74,7 +75,7 @@ def main() -> None:
     try:
         problem.add_bookmark(add)
     except ValueError as e:
-        print(f"{Fore.RED}{e}")
+        print(f"{Fore.RED}{e}{Fore.RESET}")
         return
     problem.save()
     bookmarks[add].append(pid)

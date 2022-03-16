@@ -15,6 +15,4 @@ def main() -> None:
     except FileNotFoundError:
         print(Fore.RED + f"Problem {pid} not found.")
         return
-    os.system("g++ -std=c++17 main.cpp")
-    os.system(f"./a.out < in1.txt > out.txt")
-    os.system("diff out.txt out1.txt")
+    print(problem)

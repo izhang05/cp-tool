@@ -1,12 +1,12 @@
-import argparse
 import utils.util as util
 from utils.problem import Problem
 import cf.parser
-from pathlib import Path
 from colorama import Fore
+import utils.config as config
 
 
 def main() -> None:
+    config.setup()
     try:
         pid, contest, index = util.arg_pid()
     except ValueError as e:
@@ -17,7 +17,3 @@ def main() -> None:
     cf.parser.parse(problem)
     print(f"{Fore.GREEN}Saved to {problem.get_dir()}")
     problem.save()
-
-
-if __name__ == '__main__':
-    main()

@@ -36,7 +36,7 @@ class Problem:
             f.write(jsonpickle.encode(self))
 
     def get_dir(self, create=True) -> Path:
-        directory = util.get_dir(self.pid)
+        directory: Path = util.get_dir(self.pid)
         if create:
             directory.mkdir(parents=True, exist_ok=True)
         return directory
@@ -47,5 +47,5 @@ class Problem:
         self.bookmarks.append(bookmark)
 
     def finish(self) -> None:
-        self.solved = True
+        self.solved = "hi"
         self.finished = datetime.now()
